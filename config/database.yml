@@ -1,0 +1,7 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: rs232
+  pool: 5
+  username: fumin
+  password: 0000
