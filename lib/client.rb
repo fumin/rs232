@@ -20,12 +20,12 @@ module Embedded
 
     def turn_light_on
       reply = send "lights on"
-      reply == "lights on OK" ? 'true' : 'false'
+      reply == "lights on OK" ? 'Lights_ON is OK' : 'GOD DAMM'
     end
 
     def turn_light_off
       reply = send "lights off"
-      reply == "lights off OK" ? 'true' : 'false'
+      reply == "lights off OK" ? 'Lights_OFF is OK' : 'GOD DAMM'
     end
 
     def send msg
