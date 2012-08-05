@@ -4,7 +4,7 @@ module Embedded
   class Client 
     attr_accessor :timeout
     def initialize server
-      @server
+      @server = server
       @context = ZMQ::Context.new(1)
       @client = nil
       @poller = ZMQ::Poller.new
@@ -20,18 +20,18 @@ module Embedded
 
     def turn_light_on
       reply = send "lights on"
-      reply == "lights on OK" ? true : false
+      reply == "lights on OK" ? 'true' : 'false'
     end
 
     def turn_light_off
       reply = send "lights off"
-      reply == "lights off OK" ? true : false
+      reply == "lights off OK" ? 'true' : 'false'
     end
 
     def send msg
       @client.send_string msg
       items = @poller.poll(@timeout)
-      if items
+      if items == 1
         message = ""
         @client.recv_string message
         return message

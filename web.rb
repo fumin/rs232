@@ -18,6 +18,7 @@ post '/lights' do
          when 'off'
            c.turn_light_off
          end
+puts "the response is: #{resp}"
   c.close
   resp
 end
