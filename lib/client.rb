@@ -8,7 +8,7 @@ module Embedded
       @context = ZMQ::Context.new(1)
       @client = nil
       @poller = ZMQ::Poller.new
-      @timeout = 2500
+      @timeout = 10000
 
       reconnect_to_broker
     end
@@ -18,14 +18,14 @@ module Embedded
       @client.close
     end
 
-    def turn_light_on
-      reply = send "lights on"
-      reply == "lights on OK" ? 'Lights_ON is OK' : 'GOD DAMM'
+    def turn_light_on mac_address
+      reply = send "#{mac_address} lights on"
+      reply == "#{mac_address} lights on OK" ? true : false
     end
 
-    def turn_light_off
-      reply = send "lights off"
-      reply == "lights off OK" ? 'Lights_OFF is OK' : 'GOD DAMM'
+    def turn_light_off mac_address
+      reply = send "#{mac_address} lights off"
+      reply == "#{mac_address} lights off OK" ? true : false
     end
 
     def send msg

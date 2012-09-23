@@ -1,6 +1,43 @@
-<h1>Nandalu Embedded</h1>
-<form action="lights" method="post">
-  Lights_ON<input type="radio" name="on_off" value="on"/>
-  Lights_OFF<input type="radio" name="on_off" value="off"/>
+<h1>Nandalu iLight (Embedded System)</h1>
+<form action="instruments" method="POST">
+  Room<input type="text" name="instrument[room]" />
+  Mac Address<input type="text" name="instrument[mac_address]" />
+  Description<input type="text" name="instrument[description]" />
   <input type="submit">
 </form>
+
+<table>
+<thead>
+  <tr>
+    <td style="width: 100;">Room</td>
+    <td style="width: 100;">Description</td>
+    <td style="width: 150;">Mac Address</td>
+    <td style="width: 100;">status</td>
+    <td style="width: 100;">Command</td>
+    <td style="width: 100;">Delete</td>
+  <tr>
+</thead>
+<tbody>
+  <% Instrument.find_each do |i| %>
+    <tr>
+      <td><%= i.room %></td>
+      <td><%= i.description %></td>
+      <td><%= i.mac_address.unpack('H*').first %></td>
+      <td><%= i.status %></td>
+      <td>
+        <form action=<%= "lights/#{i.mac_address.unpack('H*').first}" %> method="post">
+          Lights_ON<input type="radio" name="on_off" value="on"/>
+          Lights_OFF<input type="radio" name="on_off" value="off"/>
+          <input type="submit">
+        </form>
+      </td>
+      <td>
+        <form action=<%= "instruments/#{i.mac_address.unpack('H*').first}" %> method="POST">
+          <input type="hidden" name="call_method" value="delete"/>
+          <button type="submit">delete</button>
+        </form>
+      </td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
