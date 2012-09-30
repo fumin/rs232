@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: rs232
+  database: rs232_dev
   pool: 5
   username: fumin
   password: 0000
