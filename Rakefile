@@ -17,7 +17,7 @@ namespace :db do
 
   desc "Drop database"
   task(:drop) do
-    cfg = db_hash
+    cfg = YAML::load(File.open('config/database.yml'))['development']
     ActiveRecord::Base.establish_connection(
       cfg.merge('database' => 'postgres'))
     ActiveRecord::Base.connection.drop_database(cfg['database'])

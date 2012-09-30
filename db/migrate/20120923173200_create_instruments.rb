@@ -5,7 +5,7 @@ class CreateInstruments < ActiveRecord::Migration
       t.binary :mac_address , null: false
       t.text :description
       t.string :status, null: false
-
+      t.timestamp :latest_on_time
       t.timestamps
     end
     add_index :instruments, :mac_address, unique: true

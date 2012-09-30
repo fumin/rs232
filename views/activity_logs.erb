@@ -1,0 +1,36 @@
+<h1>Activity Log</h1>
+<table>
+<thead>
+  <tr>
+    <td>Year</td>
+    <td>Month</td>
+    <td>Week</td>
+    <td>Day</td>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td><%= @year_accumulate_time %></td>
+    <td><%= @month_accumulate_time %></td>
+    <td><%= @week_accumulate_time %></td>
+    <td><%= @day_accumulate_time %></td>
+  </tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+  <tr>
+    <td>ON_Time</td>
+    <td>OFF_Time</td>
+  </tr>
+</thead>
+<tbody>
+  <% @activity_logs.each do |i|%>
+    <tr>
+      <td><%= i.on_time %></td>
+      <td><%= i.off_time %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>

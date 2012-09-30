@@ -12,23 +12,33 @@
     <td style="width: 100;">Room</td>
     <td style="width: 100;">Description</td>
     <td style="width: 150;">Mac Address</td>
-    <td style="width: 100;">status</td>
-    <td style="width: 100;">Command</td>
+    <td style="width: 150;">Status</td>
+    <td style="width: 150;">Time_Accumulated(s)</td>
+    <td style="width: 200;">Latest_ON_Time</td>
+    <td style="width: 300;">Time Setting</td>
+    <td style="width: 300;">Command</td>
     <td style="width: 100;">Delete</td>
   <tr>
 </thead>
 <tbody>
   <% Instrument.find_each do |i| %>
+    <% unpacked_mac_address = i.mac_address.unpack('H*').first %>
     <tr>
       <td><%= i.room %></td>
       <td><%= i.description %></td>
-      <td><%= i.mac_address.unpack('H*').first %></td>
-      <td><%= i.status %></td>
+      <td><%= unpacked_mac_address %></td>
+      <td><%= i.status %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=<%= "'activity_logs/#{unpacked_mac_address}'" %>>activity_logs</a></td>
+      <td><%= ActivityLog.find_all_by_mac_address(i.mac_address).inject(0){|secs, al| secs += al.off_time.to_i - al.on_time.to_i}%></td>
+      <td><%= i.latest_on_time %></td>
+      <td>
+        On_time<input type="text" />
+        Off_time<input type="text" />
+      </td>
       <td>
         <form action=<%= "lights/#{i.mac_address.unpack('H*').first}" %> method="post">
           Lights_ON<input type="radio" name="on_off" value="on"/>
           Lights_OFF<input type="radio" name="on_off" value="off"/>
-          <input type="submit">
+          <input type="submit">|
         </form>
       </td>
       <td>
