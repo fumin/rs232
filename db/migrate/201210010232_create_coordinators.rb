@@ -7,10 +7,10 @@ class CreateCoordinators < ActiveRecord::Migration
       t.text :description, null: false
       t.timestamps
     end
+    add_index :coordinators, :mac_address, unique: true
+    add_index :coordinators, :description, unique: true
+    add_index :coordinators, :pan_id, unique: true
   end
-  add_index :coordinators, :mac_address, unique: true
-  add_index :coordinators, :description, unique: true
-  add_index :coordinators, :pan_id, unique: true
 
   def down
     drop_table :coordinators

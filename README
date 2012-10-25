@@ -3,3 +3,5 @@
     zbatery -p 9292 -c config/rainbows.rb
 2. To enter console
     irb -r ./web.rb
+3. To start the system updater
+    ruby ./updater.rb

@@ -1,0 +1,39 @@
+<h1>External Devices</h1>
+<h4>Number of external devices in system: <%= ExternalDevice.count %></h4>
+<table>
+  <thead>
+    <tr>
+      <td>id</td>
+      <td>instrument</td>
+      <td>device type</td>
+      <td>latest on time</td>
+      <td>scheduled on time</td>
+      <td>scheduled off time</td>
+      <td>description</td>
+      <td>status</td>
+      <td>commands</td>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% ExternalDevice.find_each do |d| %>
+    <tr>
+      <td><%= d.id %></td>
+      <td><%= d.instrument.id %></td>
+      <td><%= d.device_type %></td>
+      <td><%= d.latest_on_time %></td>
+      <td><%= d.scheduled_on_time %></td>
+      <td><%= d.scheduled_off_time %></td>
+      <td><%= d.description %></td>
+      <td><%= d.status %></td>
+      <td>
+        <form action=<%= "external_devices/#{d.id}/turn" %> method="POST">
+          ON<input type="radio" name="on_off" value="on"/>
+          OFF<input type="radio" name="on_off" value="off"/>
+          <button type="submit">GO</button>
+        </form>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

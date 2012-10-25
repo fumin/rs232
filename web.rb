@@ -2,11 +2,14 @@ require 'sinatra'
 
 require './setup'
 require './lib/client'
+require './lib/publisher'
 
 init_app
+PUBLISHER = Publisher.new
 
 get '/' do
-  erb :index
+  'hello'
+  #erb :index
 end
 
 get '/activity_logs/:unpacked_mac_address' do |unpacked_mac_address|
@@ -22,6 +25,30 @@ get '/activity_logs/:unpacked_mac_address' do |unpacked_mac_address|
   @day_accumulate_time = calculate_secs.call Time.now.beginning_of_day
   erb :activity_logs
 end
+
+# ================================================
+get '/external_devices' do
+  erb :external_devices
+end
+
+post '/external_devices/:id/turn' do |id|
+  case params[:on_off]
+  when 'on'
+    PUBLISHER.turn_on id
+    for i in 0..5
+      sleep(1)
+      break if ExternalDevice.find_by_id(id).status == 'on'
+    end
+  when 'off'
+    PUBLISHER.turn_off id
+    for i in 0..5
+      sleep(1)
+      break if ExternalDevice.find_by_id(id).status == 'off'
+    end
+  end
+  redirect '/external_devices'
+end
+#=================================================
 
 post '/lights/:unpacked_mac_address' do |unpacked_mac_address|
   mac_address = [unpacked_mac_address].pack('H*')
